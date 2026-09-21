@@ -805,6 +805,20 @@ Para mi jochis favorita 🌻`,
         const spiral = new THREE.Points(spiralGeom, spiralMat);
         scene.add(spiral);
 
+        const spiralTopPoints = [];
+        for (let i = 0; i < SPIRAL_COUNT; i++) {
+            const r = Math.random() * 250;
+            const armIndex = Math.floor(Math.random() * arms);
+            const theta = -(armIndex * Math.PI * 2 / arms) - (r * 0.02) + (Math.random() * 0.4 - 0.2);
+            const sx = Math.cos(theta) * r;
+            const sz = Math.sin(theta) * r;
+            const sy = 60 + (r * 0.4) + (Math.random() * 8 - 4);
+            spiralTopPoints.push(new THREE.Vector3(sx, sy, sz));
+        }
+        const spiralTopGeom = new THREE.BufferGeometry().setFromPoints(spiralTopPoints);
+        const spiralTop = new THREE.Points(spiralTopGeom, spiralMat);
+        scene.add(spiralTop);
+
         // ================= Polvo fino =================
         const DUST_INNER_R = 150;
         const DUST_OUTER_R = 380;
@@ -1191,6 +1205,7 @@ Para mi jochis favorita 🌻`,
             ring1.rotation.z += 0.002;
             ring2.rotation.z -= 0.0015;
             spiral.rotation.y -= 0.0045;
+        spiralTop.rotation.y += 0.0045;
             dust.rotation.y += 0.0006;
 
             glow.scale.set(450 * (1 + Math.sin(t * 0.4) * 0.03), 450 * (1 + Math.sin(t * 0.4) * 0.03), 1);
